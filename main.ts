@@ -29,7 +29,7 @@ interface PluginSettings {
 }
 
 const DEFAULT_SETTINGS: PluginSettings = {
-	pathPattern: "Extract/{2:n}",
+	pathPattern: "Extract/{2:}",
 };
 
 // ========== Main Plugin ==========
@@ -78,7 +78,7 @@ export default class ExtractPlugin extends Plugin {
 
 		for (const line of lines) {
 			if (line.startsWith("#")) {
-				if (current.header !== "") structs.push(current);
+				structs.push(current);
 				current = this.newStruct();
 				current.header = line.replace(/(==|%%)/g, "").trim();
 				current.headercount = (current.header.match(/^#+/) || [""])[0].length;
@@ -111,7 +111,9 @@ export default class ExtractPlugin extends Plugin {
 		root.headercount = -1;
 		let cursor = root;
 		for (const s of structs) {
-			while (cursor.headercount >= s.headercount) cursor = cursor.parent!;
+			while (cursor.headercount >= s.headercount){ 
+				cursor = cursor.parent!
+			};
 			cursor.substructs.push(s);
 			s.parent = cursor;
 			cursor = s;
@@ -226,7 +228,9 @@ export default class ExtractPlugin extends Plugin {
 }
 
 // ========== Settings ==========
+
 class ExtractSettingTab extends PluginSettingTab {
+
 	constructor(app: App, private plugin: ExtractPlugin) {
 		super(app, plugin);
 	}
