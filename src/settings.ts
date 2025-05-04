@@ -3,6 +3,14 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import ExtractPlugin from "./main";
 
+export interface PluginSettings {
+    pathPattern: string;
+}
+
+export const DEFAULT_SETTINGS: PluginSettings = {
+    pathPattern: "Extract/{2:}",
+};
+
 export class ExtractSettingTab extends PluginSettingTab {
 
     constructor(app: App, private plugin: ExtractPlugin) {

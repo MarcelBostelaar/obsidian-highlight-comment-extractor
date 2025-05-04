@@ -1,6 +1,8 @@
 import { App, FuzzySuggestModal, TAbstractFile, TFolder } from "obsidian";
 
-// ========== Folder Picker Modal ==========
+/**
+ * A modal for selecting a folder in the vault.
+ */
 export class FolderSelectModal extends FuzzySuggestModal<TFolder> {
 
 	constructor(app: App, private onSelect: (folder: TFolder) => void) {
