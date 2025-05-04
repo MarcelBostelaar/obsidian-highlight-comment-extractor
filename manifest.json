@@ -1,0 +1,10 @@
+{
+	"id": "obsidian-highlight-comment-extractor",
+	"name": "Highlight and Comment Extractor",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Extracts highlights and comments from one or many markdown files into a new folder.",
+	"author": "Marcel Bostelaar",
+	"authorUrl": "https://github.com/MarcelBostelaar",
+	"isDesktopOnly": false
+}
