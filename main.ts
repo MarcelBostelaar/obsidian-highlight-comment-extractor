@@ -1,5 +1,6 @@
 import {
 	App,
+	FuzzySuggestModal,
 	Modal,
 	Notice,
 	Plugin,
@@ -255,15 +256,13 @@ class ExtractSettingTab extends PluginSettingTab {
 }
 
 // ========== Folder Picker Modal ==========
-class FolderSelectModal extends Modal {
+class FolderSelectModal extends FuzzySuggestModal<TFolder> {
+
 	constructor(app: App, private onSelect: (folder: TFolder) => void) {
 		super(app);
 	}
 
-	onOpen() {
-		const { contentEl } = this;
-		contentEl.createEl("h2", { text: "Select Folder" });
-
+	getItems(): TFolder[] {
 		const folders: TFolder[] = [];
 		const gather = (item: TAbstractFile) => {
 			if (item instanceof TFolder) {
@@ -272,17 +271,14 @@ class FolderSelectModal extends Modal {
 			}
 		};
 		gather(this.app.vault.getRoot());
-
-		for (const folder of folders) {
-			const btn = contentEl.createEl("button", { text: folder.path });
-			btn.onclick = () => {
-				this.close();
-				this.onSelect(folder);
-			};
-		}
+		return folders;
 	}
 
-	onClose() {
-		this.contentEl.empty();
+	getItemText(item: TFolder): string {
+		return item.path;
+	}
+
+	onChooseItem(folder: TFolder, evt: MouseEvent | KeyboardEvent) {
+		this.onSelect(folder);
 	}
 }
